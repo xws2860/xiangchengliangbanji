@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 乡城凉拌鸡
 - 乡城凉拌鸡项目是乡城县的水利数字沙盘项目，主要利用了ArcGIS Server提供的MapServer服务，ArcGIS官方提供的MapSDK for Javascript技术、SpringBoot技术、Vue3.0开发技术。
 - 数据库使用了Mysql
@@ -57,3 +58,6 @@ VITE_MAP_SERVER_URL=https://10.137.15.184:6443/arcgis/rest/services/xiangchengli
 ```
 > 其中VITE_BASE_URL为后端访问的地址
 > VITE_MAP_SERVER_URL为arcgis server提供的MapServer地址。
+=======
+# xws
+>>>>>>> def83bd2d1ff18734f6c5eb1657a52825f7948bf
