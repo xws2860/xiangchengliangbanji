@@ -1,0 +1,114 @@
+<html>
+<head>
+  <meta charSet="utf-8"/>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <title>乡城县水利数字沙盘系统</title>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+    .esri-popup__main-container{
+      display: none !important;
+    }
+  </style>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.26/"></script>
+  <script>
+    require(["esri/TimeExtent",
+      "esri/views/SceneView",
+      "esri/WebScene",
+      "esri/config",
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/Graphic",
+      "esri/layers/GraphicsLayer",
+      "esri/layers/GeoJSONLayer",
+      "esri/widgets/Popup",
+      "esri/widgets/Legend",
+      "esri/layers/FeatureLayer",
+      "esri/layers/MapImageLayer",
+      "esri/layers/support/LabelClass"],function(TimeExtent,SceneView, WebScene, esriConfig, Map, MapView, Graphic, GraphicsLayer, GeoJSONLayer, Popup, Legend, FeatureLayer, MapImageLayer,LabelClass) {
+      esriConfig.apiKey = "AAPKfcfab4769ecd4082a0983c91ddb91a10qY1wTLqICXuld4YQGysCEGlH46-8nmNBS517S_kHqDUwYvk9P02AdG8B_gtG2UcR";
+      const map = new WebScene({
+        portalItem: {
+          id: "5a392557cffb485f8fe004e668e9edc0"
+        }
+      });
+      // Create the SceneView
+      const view = new SceneView({
+        map: map,
+        container: "viewDiv",
+        center: [99.80, 28.93],
+        zoom: 8,
+        environment:{
+          lighting:null
+        },
+        popup: {
+          actions: [],
+          dockEnabled: true,
+          dockOptions: {
+            buttonEnabled: true,
+            breakpoint: false
+          }
+        }
+      });
+
+      //添加图例
+      const legend = new Legend({
+        view: view,  // 地图视图对象
+        container: "legendDiv"  // 指定容器元素的 ID
+      });
+      // 将图例组件添加到地图中
+      view.ui.add(legend, "bottom-right");
+      //加载map service
+      const layer = new MapImageLayer({
+        url: "https://192.168.3.4:6443/arcgis/rest/services/xiangchengliangbanji/MapServer",
+        outFields: ["*"],
+        sublayers: [
+          {
+            id: 0,
+            visible: true
+          },{
+            id: 1,
+            visible: true,
+          },{
+            id: 2,
+            visible: true,
+            autoCloseEnabled: true, // 启用自动隐藏功能
+            popupTemplate: {
+              content:(e)=>{
+                console.log(e.graphic.attributes)
+              },
+              style: "opacity: 0.1;"
+            }
+          },{
+            id: 3,
+            visible: true
+          },{
+            id: 4,
+            visible: true
+          },{
+            id: 5,
+            visible: true
+          }
+        ]
+      });
+      map.add(layer)
+      view.popup.on("trigger-action", (event) => {
+        console.log(view.popup.selectedFeature)
+        event.action.execute()
+      });
+    });
+  </script>
+</head>
+<body>
+<div id="viewDiv"></div>
+<div id="legendDiv"></div>
+</body>
+</html>
